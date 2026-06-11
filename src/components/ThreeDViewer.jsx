@@ -1,13 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
-import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 export default function ThreeDViewer() {
   const containerRef = useRef(null);
   const canvasRef = useRef(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [loadProgress, setLoadProgress] = useState(0);
   const [loadError, setLoadError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -15,6 +13,7 @@ export default function ThreeDViewer() {
     let active = true;
     let renderer, scene, camera, controls, animationFrameId;
     let resizeObserver;
+    const clock = new THREE.Clock();
 
     try {
       if (!containerRef.current || !canvasRef.current) {
@@ -29,8 +28,8 @@ export default function ThreeDViewer() {
       scene = new THREE.Scene();
 
       // 2. Camera setup
-      camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
-      camera.position.set(0, 2, 13); // Position slightly above and in front
+      camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 1000);
+      camera.position.set(0, 1.5, 9); // Positioned slightly above and in front
 
       // 3. Renderer setup
       renderer = new THREE.WebGLRenderer({
@@ -41,159 +40,356 @@ export default function ThreeDViewer() {
       renderer.setSize(width, height);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
       renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
-      renderer.toneMappingExposure = 1.2;
+      renderer.toneMappingExposure = 1.1;
 
       // 4. Controls setup
       controls = new OrbitControls(camera, renderer.domElement);
       controls.enableDamping = true;
       controls.dampingFactor = 0.05;
       controls.enableZoom = true;
-      controls.minDistance = 5;
-      controls.maxDistance = 20;
-      controls.autoRotate = true; // Automatically rotate to showcase the 3D details
-      controls.autoRotateSpeed = 1.5;
-      controls.target.set(0, 0, 0); // Point camera rotation target at the origin
+      controls.minDistance = 4;
+      controls.maxDistance = 15;
+      controls.autoRotate = true;
+      controls.autoRotateSpeed = 1.2;
+      controls.target.set(0, 0.4, 0); // Point camera target at the cat's chest/head level
 
       // 5. Lighting
-      const ambientLight = new THREE.AmbientLight(0xffffff, 0.85);
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.75);
       scene.add(ambientLight);
 
-      // Key light
-      const keyLight = new THREE.DirectionalLight(0xffffff, 1.5);
-      keyLight.position.set(5, 10, 7);
+      // Key light (Warm yellow/gold tone)
+      const keyLight = new THREE.DirectionalLight(0xfff1e0, 1.6);
+      keyLight.position.set(6, 8, 6);
+      keyLight.castShadow = true;
+      keyLight.shadow.mapSize.width = 1024;
+      keyLight.shadow.mapSize.height = 1024;
       scene.add(keyLight);
 
-      // Backlight
-      const backLight = new THREE.DirectionalLight(0xffffff, 1.0);
-      backLight.position.set(-5, 5, -7);
+      // Backlight (Cool white blue tone)
+      const backLight = new THREE.DirectionalLight(0xe0f2fe, 1.0);
+      backLight.position.set(-6, 4, -6);
       scene.add(backLight);
 
-      // Neon Green accent lights inside the earcups area to highlight Razer brand
-      const greenGlowLeft = new THREE.PointLight(0x33ff33, 3.5, 10);
-      greenGlowLeft.position.set(-3, 0, 1);
-      scene.add(greenGlowLeft);
+      // Warm glow point lights on the sides to showcase the orange cat
+      const goldGlowLeft = new THREE.PointLight(0xf59e0b, 2.0, 8);
+      goldGlowLeft.position.set(-3, 1, 2);
+      scene.add(goldGlowLeft);
 
-      const greenGlowRight = new THREE.PointLight(0x33ff33, 3.5, 10);
-      greenGlowRight.position.set(3, 0, 1);
-      scene.add(greenGlowRight);
+      const goldGlowRight = new THREE.PointLight(0xf59e0b, 2.0, 8);
+      goldGlowRight.position.set(3, 1, 2);
+      scene.add(goldGlowRight);
 
-      // 6. Theme materials
-      const materialChrome = new THREE.MeshStandardMaterial({
-        color: 0xdddddd,
-        metalness: 0.95,
-        roughness: 0.05,
-        name: 'Chrome'
+      // 6. Construct the Procedural Cat
+      const catGroup = new THREE.Group();
+      
+      // Materials
+      const orangeMat = new THREE.MeshStandardMaterial({
+        color: 0xf59e0b, // Warm Amber/Orange
+        roughness: 0.5,
+        metalness: 0.1
       });
-
-      const materialRazerGreen = new THREE.MeshStandardMaterial({
-        color: 0x33ff33,
-        emissive: 0x00cc00,
-        emissiveIntensity: 0.4,
-        metalness: 0.1,
+      const whiteMat = new THREE.MeshStandardMaterial({
+        color: 0xffffff, // White socks, belly, muzzle
+        roughness: 0.5,
+        metalness: 0.05
+      });
+      const pinkMat = new THREE.MeshStandardMaterial({
+        color: 0xfca5a5, // Inner ears and nose
+        roughness: 0.6,
+        metalness: 0.1
+      });
+      const eyeMat = new THREE.MeshStandardMaterial({
+        color: 0x1e293b, // Deep dark slate eyes
+        roughness: 0.1,
+        metalness: 0.8
+      });
+      const collarMat = new THREE.MeshStandardMaterial({
+        color: 0x10b981, // Emerald collar
+        roughness: 0.5,
+        metalness: 0.2
+      });
+      const bellMat = new THREE.MeshStandardMaterial({
+        color: 0xfbbf24, // Gold bell
         roughness: 0.2,
-        name: 'RazerGreen'
+        metalness: 0.85
+      });
+      const whiskersMat = new THREE.MeshStandardMaterial({
+        color: 0x475569, // Dark slate whiskers
+        roughness: 0.7
       });
 
-      const materialMatteBlack = new THREE.MeshStandardMaterial({
-        color: 0x161616,
-        metalness: 0.1,
-        roughness: 0.7,
-        name: 'MatteBlack'
-      });
+      // A. Body
+      const bodyGeo = new THREE.SphereGeometry(1.2, 32, 32);
+      const bodyMesh = new THREE.Mesh(bodyGeo, orangeMat);
+      bodyMesh.scale.set(1.0, 0.85, 1.35);
+      bodyMesh.castShadow = true;
+      bodyMesh.receiveShadow = true;
+      catGroup.add(bodyMesh);
 
-      const materialInnerCushion = new THREE.MeshStandardMaterial({
-        color: 0x222222,
-        metalness: 0.05,
-        roughness: 0.85,
-        name: 'Fabric'
-      });
+      // B. Belly (white chest patch)
+      const bellyGeo = new THREE.SphereGeometry(0.9, 32, 32);
+      const bellyMesh = new THREE.Mesh(bellyGeo, whiteMat);
+      bellyMesh.scale.set(0.85, 0.85, 0.35);
+      bellyMesh.position.set(0, -0.1, 0.95);
+      bellyMesh.rotation.x = Math.PI / 12;
+      bellyMesh.castShadow = true;
+      bellyMesh.receiveShadow = true;
+      catGroup.add(bellyMesh);
 
-      // 7. Load OBJ Model
-      const loader = new OBJLoader();
-      loader.load(
-        '/Razer_kraken.obj',
-        (obj) => {
-          if (!active) return;
-          
-          obj.traverse((child) => {
-            if (child.isMesh) {
-              const matName = child.materialLibraryName || child.materialName || '';
-              
-              if (matName.includes('Chrome') || child.name.toLowerCase().includes('metal')) {
-                child.material = materialChrome;
-              } else if (
-                matName.includes('Mat.6') || 
-                child.name.toLowerCase().includes('green') || 
-                child.name.toLowerCase().includes('logo') || 
-                matName.includes('green')
-              ) {
-                child.material = materialRazerGreen;
-              } else if (
-                matName.includes('Coarse_leather') || 
-                matName.includes('Fabric') || 
-                matName.includes('Foam')
-              ) {
-                child.material = materialInnerCushion;
-              } else {
-                child.material = materialMatteBlack;
-              }
+      // C. Neck & Collar
+      const collarGeo = new THREE.TorusGeometry(0.8, 0.09, 16, 32);
+      const collarMesh = new THREE.Mesh(collarGeo, collarMat);
+      collarMesh.position.set(0, 0.9, 0.6);
+      collarMesh.rotation.x = Math.PI / 2.3;
+      collarMesh.castShadow = true;
+      catGroup.add(collarMesh);
 
-              child.castShadow = true;
-              child.receiveShadow = true;
-            }
-          });
+      // Golden collar bell
+      const bellGeo = new THREE.SphereGeometry(0.16, 16, 16);
+      const bellMesh = new THREE.Mesh(bellGeo, bellMat);
+      bellMesh.position.set(0, 0.65, 1.25);
+      bellMesh.castShadow = true;
+      catGroup.add(bellMesh);
 
-          // Calculate bounding box and dimensions
-          const box = new THREE.Box3().setFromObject(obj);
-          const center = box.getCenter(new THREE.Vector3());
-          const size = box.getSize(new THREE.Vector3());
+      // D. Head
+      const headGeo = new THREE.SphereGeometry(0.95, 32, 32);
+      const headMesh = new THREE.Mesh(headGeo, orangeMat);
+      headMesh.position.set(0, 1.45, 0.7);
+      headMesh.castShadow = true;
+      headMesh.receiveShadow = true;
+      catGroup.add(headMesh);
 
-          // Centering using the Pivot Pattern:
-          // Shift children inside the obj group so that the model's actual center is at (0,0,0)
-          obj.position.set(-center.x, -center.y, -center.z);
+      // E. Muzzle/Cheeks (White puffs)
+      const cheekGeo = new THREE.SphereGeometry(0.26, 16, 16);
+      
+      const leftCheek = new THREE.Mesh(cheekGeo, whiteMat);
+      leftCheek.position.set(-0.19, 1.3, 1.4);
+      leftCheek.scale.set(1, 0.9, 1);
+      leftCheek.castShadow = true;
+      catGroup.add(leftCheek);
 
-          // Add obj to a parent pivot group that we can scale and center in the world
-          const pivot = new THREE.Group();
-          pivot.add(obj);
+      const rightCheek = new THREE.Mesh(cheekGeo, whiteMat);
+      rightCheek.position.set(0.19, 1.3, 1.4);
+      rightCheek.scale.set(1, 0.9, 1);
+      rightCheek.castShadow = true;
+      catGroup.add(rightCheek);
 
-          // Scale the pivot group
-          const maxDim = Math.max(size.x, size.y, size.z);
-          const targetScale = 8.0 / maxDim; // Adjusted scale for perfect centering
-          pivot.scale.set(targetScale, targetScale, targetScale);
+      // Nose
+      const noseGeo = new THREE.SphereGeometry(0.09, 16, 16);
+      const noseMesh = new THREE.Mesh(noseGeo, pinkMat);
+      noseMesh.scale.set(1.4, 1.0, 0.9);
+      noseMesh.position.set(0, 1.38, 1.55);
+      noseMesh.castShadow = true;
+      catGroup.add(noseMesh);
 
-          // Position the pivot exactly at the scene's origin
-          pivot.position.set(0, 0, 0);
+      // F. Eyes
+      const eyeGeo = new THREE.SphereGeometry(0.13, 16, 16);
+      const eyeHighlightGeo = new THREE.SphereGeometry(0.04, 8, 8);
 
-          scene.add(pivot);
-          setIsLoading(false);
-        },
-        (xhr) => {
-          if (xhr.total > 0 && active) {
-            const pct = Math.round((xhr.loaded / xhr.total) * 100);
-            setLoadProgress(pct);
-          }
-        },
-        (err) => {
-          console.error('Error loading OBJ model:', err);
-          if (active) {
-            setErrorMessage(err.message || 'Error al descargar modelo 3D');
-            setLoadError(true);
-            setIsLoading(false);
-          }
-        }
-      );
+      // Left Eye
+      const leftEye = new THREE.Mesh(eyeGeo, eyeMat);
+      leftEye.position.set(-0.38, 1.55, 1.42);
+      leftEye.castShadow = true;
+      catGroup.add(leftEye);
+
+      const leftEyeHighlight = new THREE.Mesh(eyeHighlightGeo, whiteMat);
+      leftEyeHighlight.position.set(-0.33, 1.6, 1.52);
+      catGroup.add(leftEyeHighlight);
+
+      // Right Eye (The Winking Eye)
+      const rightEye = new THREE.Mesh(eyeGeo, eyeMat);
+      rightEye.position.set(0.38, 1.55, 1.42);
+      rightEye.castShadow = true;
+      catGroup.add(rightEye);
+
+      const rightEyeHighlight = new THREE.Mesh(eyeHighlightGeo, whiteMat);
+      rightEyeHighlight.position.set(0.43, 1.6, 1.52);
+      catGroup.add(rightEyeHighlight);
+
+      // G. Ears
+      const earGeo = new THREE.ConeGeometry(0.35, 0.7, 4);
+      const innerEarGeo = new THREE.ConeGeometry(0.24, 0.55, 4);
+
+      // Left Ear Outer
+      const leftEarOuter = new THREE.Mesh(earGeo, orangeMat);
+      leftEarOuter.position.set(-0.55, 2.2, 0.55);
+      leftEarOuter.rotation.set(-0.15, -0.4, 0.25);
+      leftEarOuter.castShadow = true;
+      catGroup.add(leftEarOuter);
+
+      // Left Ear Inner (pink)
+      const leftEarInner = new THREE.Mesh(innerEarGeo, pinkMat);
+      leftEarInner.position.set(-0.52, 2.18, 0.61);
+      leftEarInner.rotation.set(-0.15, -0.4, 0.25);
+      catGroup.add(leftEarInner);
+
+      // Right Ear Outer
+      const rightEarOuter = new THREE.Mesh(earGeo, orangeMat);
+      rightEarOuter.position.set(0.55, 2.2, 0.55);
+      rightEarOuter.rotation.set(-0.15, 0.4, -0.25);
+      rightEarOuter.castShadow = true;
+      catGroup.add(rightEarOuter);
+
+      // Right Ear Inner (pink)
+      const rightEarInner = new THREE.Mesh(innerEarGeo, pinkMat);
+      rightEarInner.position.set(0.52, 2.18, 0.61);
+      rightEarInner.rotation.set(-0.15, 0.4, -0.25);
+      catGroup.add(rightEarInner);
+
+      // H. Whiskers (Cylinders)
+      const whiskerGeo = new THREE.CylinderGeometry(0.012, 0.012, 0.7, 8);
+      
+      // Left whiskers
+      for (let i = 0; i < 3; i++) {
+        const whisker = new THREE.Mesh(whiskerGeo, whiskersMat);
+        whisker.rotation.z = Math.PI / 2 + (i - 1) * 0.15;
+        whisker.rotation.y = 0.2;
+        whisker.position.set(-0.62, 1.28 + (i - 1) * 0.06, 1.45);
+        catGroup.add(whisker);
+      }
+
+      // Right whiskers
+      for (let i = 0; i < 3; i++) {
+        const whisker = new THREE.Mesh(whiskerGeo, whiskersMat);
+        whisker.rotation.z = Math.PI / 2 - (i - 1) * 0.15;
+        whisker.rotation.y = -0.2;
+        whisker.position.set(0.62, 1.28 + (i - 1) * 0.06, 1.45);
+        catGroup.add(whisker);
+      }
+
+      // I. Paws / Legs
+      const legCylinderGeo = new THREE.CylinderGeometry(0.22, 0.22, 0.7, 16);
+      const pawSocksGeo = new THREE.SphereGeometry(0.25, 16, 16);
+
+      // Front Left Leg & Sock
+      const flLeg = new THREE.Mesh(legCylinderGeo, orangeMat);
+      flLeg.position.set(-0.45, -0.6, 0.7);
+      flLeg.castShadow = true;
+      catGroup.add(flLeg);
+      
+      const flSock = new THREE.Mesh(pawSocksGeo, whiteMat);
+      flSock.scale.set(1.0, 0.75, 1.2);
+      flSock.position.set(-0.45, -0.92, 0.82);
+      flSock.castShadow = true;
+      catGroup.add(flSock);
+
+      // Front Right Leg & Sock
+      const frLeg = new THREE.Mesh(legCylinderGeo, orangeMat);
+      frLeg.position.set(0.45, -0.6, 0.7);
+      frLeg.castShadow = true;
+      catGroup.add(frLeg);
+      
+      const frSock = new THREE.Mesh(pawSocksGeo, whiteMat);
+      frSock.scale.set(1.0, 0.75, 1.2);
+      frSock.position.set(0.45, -0.92, 0.82);
+      frSock.castShadow = true;
+      catGroup.add(frSock);
+
+      // Back Left Leg & Sock
+      const blLeg = new THREE.Mesh(legCylinderGeo, orangeMat);
+      blLeg.position.set(-0.52, -0.6, -0.6);
+      blLeg.castShadow = true;
+      catGroup.add(blLeg);
+      
+      const blSock = new THREE.Mesh(pawSocksGeo, whiteMat);
+      blSock.scale.set(1.0, 0.75, 1.2);
+      blSock.position.set(-0.52, -0.92, -0.5);
+      blSock.castShadow = true;
+      catGroup.add(blSock);
+
+      // Back Right Leg & Sock
+      const brLeg = new THREE.Mesh(legCylinderGeo, orangeMat);
+      brLeg.position.set(0.52, -0.6, -0.6);
+      brLeg.castShadow = true;
+      catGroup.add(brLeg);
+      
+      const brSock = new THREE.Mesh(pawSocksGeo, whiteMat);
+      brSock.scale.set(1.0, 0.75, 1.2);
+      brSock.position.set(0.52, -0.92, -0.5);
+      brSock.castShadow = true;
+      catGroup.add(brSock);
+
+      // J. Wiggling Tail Group
+      const tailGroup = new THREE.Group();
+      tailGroup.position.set(0, -0.2, -1.2);
+      
+      const tailCylinderGeo = new THREE.CylinderGeometry(0.09, 0.08, 1.3, 16);
+      const tailMain = new THREE.Mesh(tailCylinderGeo, orangeMat);
+      tailMain.position.set(0, 0.55, -0.2);
+      tailMain.rotation.x = -Math.PI / 4.5;
+      tailMain.castShadow = true;
+      tailGroup.add(tailMain);
+
+      const tailTipGeo = new THREE.SphereGeometry(0.09, 16, 16);
+      const tailTip = new THREE.Mesh(tailTipGeo, whiteMat);
+      tailTip.position.set(0, 1.05, -0.65);
+      tailTip.castShadow = true;
+      tailGroup.add(tailTip);
+
+      catGroup.add(tailGroup);
+
+      // Center and scale entire cat group
+      catGroup.position.set(0, -0.25, 0);
+      scene.add(catGroup);
+
+      // Fade-in loader simulation for premium UX transition
+      setTimeout(() => {
+        if (active) setIsLoading(false);
+      }, 450);
 
       // 8. Animation loop
       const animate = () => {
         if (!active) return;
         animationFrameId = requestAnimationFrame(animate);
+
+        const elapsedTime = clock.getElapsedTime();
+
+        // A. Tail wiggling animation
+        if (tailGroup) {
+          tailGroup.rotation.y = Math.sin(elapsedTime * 4.5) * 0.35;
+          tailGroup.rotation.z = Math.cos(elapsedTime * 2.5) * 0.12;
+        }
+
+        // B. Winking eye animation: every 3 seconds, wink for 500ms
+        const cycleTime = elapsedTime % 3.0;
+        if (cycleTime > 2.5) {
+          // Wink down and up smoothly using sine
+          const winkProgress = (cycleTime - 2.5) / 0.5; // 0 to 1
+          const scaleY = 1.0 - 0.9 * Math.sin(winkProgress * Math.PI);
+          
+          if (rightEye) {
+            rightEye.scale.y = scaleY;
+          }
+          if (rightEyeHighlight) {
+            rightEyeHighlight.scale.setScalar(scaleY > 0.35 ? 1 : 0);
+          }
+        } else {
+          // Eyes open
+          if (rightEye) {
+            rightEye.scale.y = 1.0;
+          }
+          if (rightEyeHighlight) {
+            rightEyeHighlight.scale.setScalar(1.0);
+          }
+        }
+
+        // C. Breathe motion (tiny scale oscillations of chest/belly)
+        if (bodyMesh) {
+          bodyMesh.scale.y = 0.85 + Math.sin(elapsedTime * 1.8) * 0.012;
+        }
+        if (bellyMesh) {
+          bellyMesh.scale.y = 0.85 + Math.sin(elapsedTime * 1.8) * 0.012;
+          bellyMesh.position.y = -0.1 + Math.sin(elapsedTime * 1.8) * 0.006;
+        }
+
         controls.update();
         renderer.render(scene, camera);
       };
       animate();
 
-      // 9. ResizeObserver setup (Enterprise Responsive canvas sizing)
+      // 9. ResizeObserver setup
       resizeObserver = new ResizeObserver((entries) => {
         if (!active || !camera || !renderer) return;
         for (let entry of entries) {
@@ -240,13 +436,13 @@ export default function ThreeDViewer() {
       {isLoading && !loadError && (
         <div className="three-d-loader-overlay">
           <img 
-            src="/razer_kraken_render.png" 
-            alt="Razer Kraken Render Fallback" 
+            src="/cys_cat_winking.png" 
+            alt="Cat Winking Render Fallback" 
             className="loader-fallback-image"
           />
           <div className="three-d-spinner-box">
             <div className="three-d-spinner"></div>
-            <span>Cargando modelo 3D interactivo... {loadProgress}%</span>
+            <span>Creando gatito 3D interactivo...</span>
           </div>
         </div>
       )}
@@ -255,8 +451,8 @@ export default function ThreeDViewer() {
       {loadError && (
         <div className="three-d-fallback-overlay">
           <img 
-            src="/razer_kraken_render.png" 
-            alt="Razer Kraken Gaming Headset" 
+            src="/cys_cat_winking.png" 
+            alt="Gato 3D CyS Solutions Animals" 
             className="three-d-static-image"
           />
           <div style={{

@@ -123,9 +123,8 @@ export default function CheckoutWizard({ isOpen, onClose }) {
       ? `📍 *Dirección:* ${deliveryAddress}\n🔍 *Referencia:* ${deliveryReference || 'Ninguna'}` 
       : '🏪 *Entrega:* Recojo en tienda Surco';
 
-    const text = `¡Hola *CyS solutions*! 🎧
-
-Quiero confirmar mi compra y adjuntar mi recibo de pago Yape:
+    const text = `¡Hola *CyS solutions Animals*! 🐱
+\nQuiero confirmar mi compra y adjuntar mi recibo de pago Yape:
 
 📦 *Pedido:* #${orderId}
 👤 *Cliente:* ${customerName}
@@ -278,7 +277,7 @@ _He adjuntado la captura del yapeo a esta conversación._`;
                       />
                       <div className="delivery-card-info">
                         <h4>Despacho a Domicilio</h4>
-                        <p>Enviamos tus audífonos directamente a tu dirección.</p>
+                        <p>Enviamos tus productos directamente a tu dirección.</p>
                       </div>
                     </div>
 

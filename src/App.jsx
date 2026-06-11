@@ -18,13 +18,13 @@ import {
 const carouselSlides = [
   {
     id: 1,
-    subtitle: "EDICIÓN EXCLUSIVA INTERACTIVA 3D",
-    title: "Razer Kraken Headset",
-    tagline: "El auricular gamer más icónico de Razer. Experimenta un audio posicional 7.1 inmersivo con controladores optimizados de 50 mm, almohadillas con gel refrigerante de larga duración y micrófono retráctil con cancelación de ruido de fondo.",
-    image: "/razer_kraken_render.png",
-    gradientClass: "linear-gradient(115deg, #0F172A 52%, #33FF33 52.3%, #33FF33 54%, #0F172A 54.3%, #0F172A 55%, #1E293B 55.3%, #1E293B 58%, #0F172A 58.3%, #0F172A 59%, #1E293B 59.3%)",
+    subtitle: "COLECCIÓN PREMIUM FELINA 3D",
+    title: "CyS Solutions Animals",
+    tagline: "El paraíso de tu compañero felino. Descubre nuestra colección exclusiva de casas, accesorios, juguetes interactivos y combos premium. Además, apoya a los gatitos de la calle a través de nuestras cajas solidarias.",
+    image: "/cys_cat_winking.png",
+    gradientClass: "linear-gradient(115deg, #0F172A 52%, #D97706 52.3%, #D97706 54%, #0F172A 54.3%, #0F172A 55%, #1E293B 55.3%, #1E293B 58%, #0F172A 58.3%, #0F172A 59%, #1E293B 59.3%)",
     isLight: false,
-    buttonText: "Comprar Ahora",
+    buttonText: "Ver Colección",
     isExploded: false,
     isThreeD: true
   }
@@ -210,7 +210,7 @@ function StorefrontContent({
         <div>
           <h2 style={{ fontFamily: 'var(--font-heading)', fontWeight: 800, fontSize: '1.8rem' }}>Nuestra Colección</h2>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>
-            Mostrando {filteredProducts.length} de {products.length} audífonos disponibles
+            Mostrando {filteredProducts.length} de {products.length} productos disponibles
           </p>
         </div>
         <button 
@@ -258,11 +258,11 @@ function StorefrontContent({
               <div>
                 <h3 style={{ fontFamily: 'var(--font-heading)', fontWeight: 700 }}>Sin resultados</h3>
                 <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginTop: '4px' }}>
-                  No encontramos audífonos que coincidan con los filtros aplicados.
+                  No encontramos productos que coincidan con los filtros aplicados.
                 </p>
               </div>
               <button className="btn-secondary" onClick={resetFilters} style={{ fontSize: '0.85rem' }}>
-                Ver Todos los Audífonos
+                Ver Todos los Productos
               </button>
             </div>
           ) : (
@@ -283,7 +283,7 @@ function FloatingWhatsApp() {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleStartChat = () => {
-    const url = `https://wa.me/51${settings.whatsappNumber}?text=Hola,%20tengo%20una%20consulta%20sobre%20los%20audífonos.`;
+    const url = `https://wa.me/51${settings.whatsappNumber}?text=Hola,%20tengo%20una%20consulta%20sobre%20los%20productos%20para%20mascotas.`;
     window.open(url, '_blank');
   };
 
@@ -293,10 +293,10 @@ function FloatingWhatsApp() {
         <div className="whatsapp-chatbox">
           <div className="whatsapp-chatbox-header">
             <div style={{ width: '40px', height: '40px', borderRadius: '50%', backgroundColor: 'rgba(255,255,255,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700 }}>
-              🎧
+              🐱
             </div>
             <div>
-              <div style={{ fontWeight: 600, fontSize: '0.85rem' }}>Soporte CyS</div>
+              <div style={{ fontWeight: 600, fontSize: '0.85rem' }}>Soporte CyS Animals</div>
               <div style={{ fontSize: '0.7rem', opacity: 0.85, display: 'flex', alignItems: 'center', gap: '4px' }}>
                 <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#10B981', display: 'inline-block' }}></span>
                 En línea
@@ -308,7 +308,7 @@ function FloatingWhatsApp() {
           </div>
           <div className="whatsapp-chatbox-body">
             <div className="whatsapp-bubble">
-              ¡Hola! 👋 Bienvenidos a <strong>CyS solutions</strong>. ¿Tienes dudas sobre algún audífono o tu pago con Yape? Escríbenos aquí.
+              ¡Hola! 👋 Bienvenidos a <strong>CyS solutions Animals</strong>. ¿Tienes dudas sobre algún producto o tu donación solidaria? Escríbenos aquí.
             </div>
             <button 
               className="whatsapp-redirect-btn" 

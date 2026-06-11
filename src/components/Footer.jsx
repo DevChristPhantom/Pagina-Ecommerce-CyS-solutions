@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { AppContext } from '../context/AppContext';
-import { Phone, Mail, MapPin, Headphones } from 'lucide-react';
+import { Phone, Mail, MapPin } from 'lucide-react';
 
 export default function Footer() {
   const { settings } = useContext(AppContext);
@@ -21,13 +21,15 @@ export default function Footer() {
       }}>
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
-            <Headphones size={24} style={{ color: 'var(--primary)' }} />
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" style={{ color: 'var(--primary)' }}>
+              <path d="M12 14c-1.66 0-3 1.34-3 3 0 2 2 3.5 3 4 1-.5 3-2 3-4 0-1.66-1.34-3-3-3zm-4.5-3c-1.1 0-2 .9-2 2s1.5 2 2 2.5c.5-.5 2-1.4 2-2.5s-.9-2-2-2zm9 0c-1.1 0-2 .9-2 2s1.5 2 2 2.5c.5-.5 2-1.4 2-2.5s-.9-2-2-2zm-9-5C7.7 6 7 6.7 7 7.5s1 1.5 1.5 2c.5-.5 1.5-1.2 1.5-2S9.3 6 7.5 6zm9 0c-1.8 0-2.5.7-2.5 1.5s1 1.5 1.5 2c.5-.5 1.5-1.2 1.5-2S18.3 6 16.5 6z" />
+            </svg>
             <span style={{ fontSize: '1.2rem', fontWeight: 800, fontFamily: 'var(--font-heading)' }}>
               {settings.storeName.split(' ')[0]} <span style={{ color: 'var(--primary)' }}>{settings.storeName.split(' ')[1] || ''}</span>
             </span>
           </div>
           <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: 1.6 }}>
-            Especialistas en audio de alta fidelidad. Brindamos los mejores audífonos con envíos express y garantía oficial en todo el Perú.
+            Especialistas en bienestar y felicidad felina. Ofrecemos los mejores rascadores, juguetes, accesorios y combos premium con envíos express en Lima y provincias.
           </p>
         </div>
 
@@ -36,10 +38,10 @@ export default function Footer() {
             Categorías
           </h4>
           <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '0.85rem' }}>
-            <li><span style={{ cursor: 'pointer', hover: { color: 'var(--primary)' } }}>Over-Ear Inalámbricos</span></li>
-            <li><span style={{ cursor: 'pointer' }}>Earbuds Deportivos</span></li>
-            <li><span style={{ cursor: 'pointer' }}>Auriculares Gaming RGB</span></li>
-            <li><span style={{ cursor: 'pointer' }}>Conducción Ósea</span></li>
+            <li><span style={{ cursor: 'pointer' }}>Casas para Gatos</span></li>
+            <li><span style={{ cursor: 'pointer' }}>Accesorios Premium</span></li>
+            <li><span style={{ cursor: 'pointer' }}>Juguetes Interactivos</span></li>
+            <li><span style={{ cursor: 'pointer' }}>Apoyo a Gatitos (Solidario)</span></li>
           </ul>
         </div>
 
@@ -94,7 +96,7 @@ export default function Footer() {
         fontSize: '0.8rem',
         color: 'var(--text-muted)'
       }}>
-        &copy; {new Date().getFullYear()} CyS solutions. Todos los derechos reservados. Diseñado bajo estándares Senior QA & UX.
+        &copy; {new Date().getFullYear()} CyS solutions Animals. Todos los derechos reservados. Diseñado bajo estándares Senior QA & UX.
       </div>
     </footer>
   );

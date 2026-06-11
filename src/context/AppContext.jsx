@@ -3,323 +3,325 @@ import React, { createContext, useState, useEffect } from 'react';
 export const AppContext = createContext();
 
 const defaultProducts = [
-  // --- Category: Over-Ear (6 products) ---
+  // --- Category: Casas (6 products) ---
   {
     id: 1,
-    name: "CyS Neon Wireless Pro",
-    description: "Auriculares over-ear inalámbricos con cancelación de ruido inteligente y sonido Pure Bass de alta resolución. Diadema acolchada y copas giratorias con luces de estado.",
-    price: 399,
-    category: "Over-Ear",
-    color: "Negro",
-    features: ["Cancelación de Ruido", "True Wireless", "Batería 50h+"],
-    image: "/cys_neon_wireless.png",
-    stock: 15,
+    name: "Rascador Castillo Real",
+    description: "Rascador de 3 niveles con castillo superior, cueva acogedera acolchada y postes de soga sisal natural para que tu gato rasque y descanse plácidamente.",
+    price: 249,
+    category: "Casas",
+    color: "Gris",
+    features: ["Multinivel", "Postes Sisal", "Cueva Acolchada"],
+    image: "/cat_house.png",
+    stock: 8,
     isNew: true
   },
   {
     id: 2,
-    name: "CyS Studio Monitor Pro",
-    description: "Auriculares de monitoreo profesional para estudio y mezcla. Sonido plano de referencia, diadema de metal ajustable y copas acolchadas de alta comodidad.",
-    price: 450,
-    category: "Over-Ear",
-    color: "Negro",
-    features: ["Cable Desmontable", "Sonido Plano", "Garantía 12m"],
-    image: "/cys_neon_wireless.png",
-    stock: 8,
+    name: "Casa Cubo Nórdica",
+    description: "Casa minimalista de madera con cojín desmontable ultra suave y lavable. Su diseño moderno y sobrio combina perfectamente con cualquier sala.",
+    price: 120,
+    category: "Casas",
+    color: "Beige",
+    features: ["Madera Real", "Cojín Desmontable", "Lavable"],
+    image: "/cat_house.png",
+    stock: 12,
     isNew: false
   },
   {
     id: 3,
-    name: "CyS Pure Bass White Edition",
-    description: "Auriculares over-ear bluetooth color blanco puro con bajos potentes y copas de cuero sintético acolchado con memoria para máxima comodidad durante horas.",
-    price: 349,
-    category: "Over-Ear",
-    color: "Blanco",
-    features: ["True Wireless", "Pure Bass", "Batería 40h"],
-    image: "/cys_neon_wireless.png",
-    stock: 12,
+    name: "Cueva Térmica Cozy",
+    description: "Cueva térmica de fieltro plegable. Mantiene a tu gatito abrigado en invierno gracias a su diseño cerrado retentor de calor corporal.",
+    price: 89,
+    category: "Casas",
+    color: "Gris",
+    features: ["Térmica", "Plegable", "Fácil Limpieza"],
+    image: "/cat_house.png",
+    stock: 15,
     isNew: true
   },
   {
     id: 4,
-    name: "CyS Hifi Elite Gold",
-    description: "La cumbre del audio inalámbrico. Cancelación activa de ruido híbrida de nivel audiófilo y sonido 3D envolvente con detalles dorados.",
-    price: 599,
-    category: "Over-Ear",
-    color: "Negro",
-    features: ["Sonido 3D", "Cancelación de Ruido", "Garantía 12m"],
-    image: "/cys_neon_wireless.png",
-    stock: 5,
-    isNew: true
-  },
-  {
-    id: 5,
-    name: "CyS Solo Beats Red",
-    description: "Auriculares dinámicos urbanos con bajos profundos. Ideales para el uso diario con conectividad rápida y diseño plegable.",
-    price: 289,
-    category: "Over-Ear",
-    color: "Rojo",
-    features: ["Pure Bass", "Batería 40h", "True Wireless"],
-    image: "/cys_neon_wireless.png",
+    name: "Hamaca Ventana Premium",
+    description: "Hamaca flotante para instalar en ventanas. Cuenta con ventosas de grado industrial que soportan hasta 15 kg para que tu gato tome sol con seguridad.",
+    price: 75,
+    category: "Casas",
+    color: "Azul",
+    features: ["Soporta 15kg", "Ventosas Industriales", "Ahorra Espacio"],
+    image: "/cat_house.png",
     stock: 10,
     isNew: false
   },
   {
+    id: 5,
+    name: "Tipi Cat Aventurero",
+    description: "Tienda estilo tipi de lona de algodón con base súper acolchada. El refugio de descanso perfecto y privado para tu felino.",
+    price: 95,
+    category: "Casas",
+    color: "Crema",
+    features: ["Lona Algodón", "Base Acolchada", "Diseño Lindo"],
+    image: "/cat_house.png",
+    stock: 6,
+    isNew: true
+  },
+  {
     id: 6,
-    name: "CyS ANC Comfort Blue",
-    description: "Reducción activa de ruido premium y cojines de espuma ultra suaves. Perfecto para viajes largos y entornos de oficina.",
-    price: 329,
-    category: "Over-Ear",
-    color: "Azul",
-    features: ["Cancelación de Ruido", "Batería 50h+", "Garantía 12m"],
-    image: "/cys_neon_wireless.png",
-    stock: 14,
+    name: "Condominio Cat Dúplex",
+    description: "Torre rascador de lujo de dos niveles con plataformas elevadas, túnel de juego colgante y rascadores laterales para múltiples gatos.",
+    price: 349,
+    category: "Casas",
+    color: "Marrón",
+    features: ["Dúplex", "Rascadores Sisal", "Para Varios Gatos"],
+    image: "/cat_house.png",
+    stock: 4,
     isNew: false
   },
 
-  // --- Category: In-Ear (6 products) ---
+  // --- Category: Accesorios (6 products) ---
   {
     id: 7,
-    name: "CyS Sonic Buds",
-    description: "Auriculares in-ear Bluetooth ultra compactos con estuche de carga inteligente. Aislamiento de ruido pasivo y agudos ultra claros con graves profundos.",
-    price: 199,
-    category: "In-Ear",
-    color: "Plateado",
-    features: ["True Wireless", "Estuche de Carga", "Control Táctil"],
-    image: "/cys_sonic_buds.png",
-    stock: 25,
+    name: "Collar Reflectivo Ajustable",
+    description: "Collar reflectivo con broche de seguridad antiahogo (se abre al recibir presión) y cascabel incorporado para paseos seguros.",
+    price: 15,
+    category: "Accesorios",
+    color: "Rojo",
+    features: ["Broche Antiahogo", "Reflectivo", "Cascabel Removible"],
+    image: "/cys_cat_winking.png",
+    stock: 50,
     isNew: false
   },
   {
     id: 8,
-    name: "CyS Active Earbuds Sport",
-    description: "Auriculares in-ear deportivos con ganchos de sujeción ergonómicos. Totalmente resistentes al sudor IPX7 y estuche con indicador digital de carga.",
-    price: 179,
-    category: "In-Ear",
-    color: "Verde",
-    features: ["Resistente al Agua", "Ganchos Deportivos", "Batería 24h"],
-    image: "/cys_sonic_buds.png",
+    name: "Suéter de Lana Gatuno",
+    description: "Suéter de lana abrigador tejido a mano. Protege a tu gato del frío con un estilo adorable y gran libertad de movimiento.",
+    price: 35,
+    category: "Accesorios",
+    color: "Amarillo",
+    features: ["Tejido a Mano", "Súper Suave", "Para Invierno"],
+    image: "/cys_cat_winking.png",
     stock: 20,
-    isNew: false
-  },
-  {
-    id: 9,
-    name: "CyS Mini Pods White",
-    description: "Auriculares ultra ligeros color blanco puro. Emparejamiento instantáneo y controles táctiles de un solo toque para música y llamadas.",
-    price: 149,
-    category: "In-Ear",
-    color: "Blanco",
-    features: ["True Wireless", "Control Táctil", "Estuche de Carga"],
-    image: "/cys_sonic_buds.png",
-    stock: 30,
     isNew: true
   },
   {
-    id: 10,
-    name: "CyS Pro Buds ANC",
-    description: "Earbuds con cancelación activa de ruido y modo de transparencia. Altavoces dinámicos para una nitidez sonora inigualable.",
-    price: 299,
-    category: "In-Ear",
+    id: 9,
+    name: "Pajarita Elegant Cat",
+    description: "Corbatín pajarita elegante ajustable con broche de liberación rápida para que tu gato sea el centro de atención en eventos.",
+    price: 18,
+    category: "Accesorios",
     color: "Negro",
-    features: ["Cancelación de Ruido", "True Wireless", "Control Táctil"],
-    image: "/cys_sonic_buds.png",
+    features: ["Ajustable", "Estilo Pajarita", "Liberación Rápida"],
+    image: "/cys_cat_winking.png",
+    stock: 30,
+    isNew: false
+  },
+  {
+    id: 10,
+    name: "Abrigo Térmico Impermeable",
+    description: "Abrigo acolchado impermeable con forro polar interior suave. Ideal para paseos en días de llovizna o invierno húmedo.",
+    price: 45,
+    category: "Accesorios",
+    color: "Azul",
+    features: ["Impermeable", "Forro Polar", "Cierre Velcro"],
+    image: "/cys_cat_winking.png",
     stock: 15,
     isNew: true
   },
   {
     id: 11,
-    name: "CyS Carbon Earbuds",
-    description: "Diseño elegante con textura estilo fibra de carbono. Altamente resistentes al agua y sudor, ideales para entrenamientos.",
-    price: 229,
-    category: "In-Ear",
-    color: "Negro",
-    features: ["True Wireless", "Estuche de Carga", "Resistente al Agua"],
-    image: "/cys_sonic_buds.png",
-    stock: 18,
+    name: "Pañuelo Cat Bandana",
+    description: "Bandana ajustable de algodón con divertidos diseños de huellas. Lavable y sumamente transpirable para uso diario sin incomodar.",
+    price: 22,
+    category: "Accesorios",
+    color: "Naranja",
+    features: ["100% Algodón", "Diseño Divertido", "Lavable"],
+    image: "/cys_cat_winking.png",
+    stock: 25,
     isNew: false
   },
   {
     id: 12,
-    name: "CyS Aura Pink Buds",
-    description: "Auriculares in-ear ligeros de ajuste seguro. Estilo moderno, sonido equilibrado y duración de batería extendida para todo el día.",
-    price: 159,
-    category: "In-Ear",
-    color: "Blanco",
-    features: ["True Wireless", "Control Táctil", "Batería 24h"],
-    image: "/cys_sonic_buds.png",
-    stock: 22,
+    name: "Arnés y Correa de Paseo",
+    description: "Arnés tipo pechera ergonómico acolchado con correa de 1.5 metros. Seguro y cómodo, evita tirones perjudiciales en el cuello.",
+    price: 40,
+    category: "Accesorios",
+    color: "Negro",
+    features: ["Ergonómico", "Correa 1.5m", "Anti-Escapes"],
+    image: "/cys_cat_winking.png",
+    stock: 18,
     isNew: false
   },
 
-  // --- Category: Gaming (6 products) ---
+  // --- Category: Juguetes (6 products) ---
   {
     id: 13,
-    name: "CyS Gamer Pro RGB",
-    description: "Auriculares gamer de alto rendimiento con micrófono boom desmontable con cancelación de ruido. Sonido envolvente 7.1 para escuchar cada detalle de la partida.",
-    price: 299,
-    category: "Gaming",
-    color: "Negro",
-    features: ["Gaming Headset", "Micrófono Desmontable", "Sonido 3D"],
-    image: "/cys_gamer_pro.png",
-    stock: 10,
+    name: "Puntero Láser USB Recargable",
+    description: "Puntero láser recargable USB con 5 patrones diferentes de proyección (punto, ratón, etc.) para ejercitar a tu gato cazador.",
+    price: 25,
+    category: "Juguetes",
+    color: "Plateado",
+    features: ["USB Recargable", "5 Patrones Luz", "Estimula Caza"],
+    image: "/cat_house.png",
+    stock: 40,
     isNew: true
   },
   {
     id: 14,
-    name: "CyS Alpha Gaming Wireless",
-    description: "Libertad inalámbrica para jugadores exigentes. Audio de latencia cero, almohadillas de tela transpirable y sonido envolvente cinematográfico.",
-    price: 379,
-    category: "Gaming",
-    color: "Negro",
-    features: ["Gaming Headset", "True Wireless", "Sonido 3D"],
-    image: "/cys_gamer_pro.png",
-    stock: 8,
-    isNew: true
+    name: "Caña de Plumas Flexible",
+    description: "Caña de pescar flexible con plumas naturales esponjosas y cascabel. Incluye ventosa para adherirse al piso si juegas solo.",
+    price: 18,
+    category: "Juguetes",
+    color: "Multicolor",
+    features: ["Flexible", "Plumas Naturales", "Cascabel Atractor"],
+    image: "/cat_house.png",
+    stock: 35,
+    isNew: false
   },
   {
     id: 15,
-    name: "CyS Arena RGB Stereo",
-    description: "Estilo gaming clásico con espectro completo de iluminación RGB en las copas. Cable trenzado de alta resistencia y micrófono flexible.",
-    price: 189,
-    category: "Gaming",
-    color: "Negro",
-    features: ["Gaming Headset", "Micrófono Desmontable", "Sonido 3D"],
-    image: "/cys_gamer_pro.png",
-    stock: 15,
+    name: "Pelotas de Catnip Orgánico",
+    description: "Set de 3 pelotas de hierba gatera (catnip) orgánica prensada. Promueve la actividad física y ayuda a limpiar el sarro dental.",
+    price: 20,
+    category: "Juguetes",
+    color: "Verde",
+    features: ["Catnip Orgánico", "Limpieza Dental", "Set de 3"],
+    image: "/cat_house.png",
+    stock: 30,
     isNew: false
   },
   {
     id: 16,
-    name: "CyS Titan Gamer Headset",
-    description: "Diadema reforzada en acero y copas acolchadas sobredimensionadas. Parlantes de 50mm que entregan bajos explosivos para máxima inmersión.",
-    price: 249,
-    category: "Gaming",
-    color: "Negro",
-    features: ["Gaming Headset", "Micrófono Desmontable", "Pure Bass"],
-    image: "/cys_gamer_pro.png",
+    name: "Juguete Giratorio Interactivo",
+    description: "Circuito rotatorio de pelotas y pluma saltarina central que se activa con el toque de patitas. Ideal para diversión autónoma.",
+    price: 49,
+    category: "Juguetes",
+    color: "Blanco",
+    features: ["Rotación 360", "Automático", "Estimulación Mental"],
+    image: "/cat_house.png",
     stock: 12,
-    isNew: false
+    isNew: true
   },
   {
     id: 17,
-    name: "CyS Rogue Red Gaming",
-    description: "Detalles en rojo agresivo y micrófono omnidireccional. Construcción ergonómica y sonido de alta fidelidad optimizado para eSports.",
-    price: 219,
-    category: "Gaming",
-    color: "Rojo",
-    features: ["Gaming Headset", "Micrófono Desmontable", "Sonido 3D"],
-    image: "/cys_gamer_pro.png",
-    stock: 14,
-    isNew: false
-  },
-  {
-    id: 18,
-    name: "CyS Blizzard Gaming White",
-    description: "Elegancia en color blanco ártico con iluminación azul helado. Audio premium inalámbrico y cancelación pasiva de ruido exterior.",
-    price: 319,
-    category: "Gaming",
-    color: "Blanco",
-    features: ["Gaming Headset", "True Wireless", "Sonido 3D"],
-    image: "/cys_gamer_pro.png",
-    stock: 7,
-    isNew: true
-  },
-
-  // --- Category: Open-Ear (6 products) ---
-  {
-    id: 19,
-    name: "CyS Sport Run",
-    description: "Auriculares deportivos ligeros de conducción ósea. Permiten escuchar el entorno mientras entrenas. Totalmente resistentes al sudor y lluvia leve.",
-    price: 249,
-    category: "Open-Ear",
-    color: "Verde",
-    features: ["Open-Ear", "Resistente al Agua", "Batería 10h"],
-    image: "/cys_sport_run.png",
-    stock: 18,
-    isNew: false
-  },
-  {
-    id: 20,
-    name: "CyS Aero Flow Bone",
-    description: "Diseño ergonómico de titanio para conducción ósea. Sonido premium sin tapar los oídos, ideal para ciclistas y corredores urbanos.",
-    price: 320,
-    category: "Open-Ear",
+    name: "Túnel Plegable de 3 Vías",
+    description: "Túnel amplio de tres accesos con ventana superior y juguetitos colgantes. Se pliega en segundos para guardar de forma compacta.",
+    price: 55,
+    category: "Juguetes",
     color: "Negro",
-    features: ["Open-Ear", "Resistente al Agua", "Batería 10h"],
-    image: "/cys_sport_run.png",
-    stock: 10,
-    isNew: true
-  },
-  {
-    id: 21,
-    name: "CyS Fit Run Sport",
-    description: "Auriculares abiertos con enganche seguro de silicona suave. No ejercen presión en el canal auditivo y resisten chorros de agua IPX6.",
-    price: 269,
-    category: "Open-Ear",
-    color: "Azul",
-    features: ["Open-Ear", "Resistente al Agua", "Batería 24h"],
-    image: "/cys_sport_run.png",
-    stock: 11,
-    isNew: false
-  },
-  {
-    id: 22,
-    name: "CyS Trek Bone Conduction",
-    description: "Estructura flexible de titanio súper liviana. Batería de carga rápida y sonido dinámico a prueba de sudor para maratones.",
-    price: 299,
-    category: "Open-Ear",
-    color: "Negro",
-    features: ["Open-Ear", "Resistente al Agua", "Batería 10h"],
-    image: "/cys_sport_run.png",
+    features: ["3 Accesos", "Plegable", "Juguetes Colgantes"],
+    image: "/cat_house.png",
     stock: 15,
     isNew: false
   },
   {
-    id: 23,
-    name: "CyS Hydro Bone Pro",
-    description: "Audífonos de conducción ósea premium 100% sumergibles IPX8. Cuentan con almacenamiento MP3 integrado para nadar sin celular.",
-    price: 350,
-    category: "Open-Ear",
+    id: 18,
+    name: "Pescado Danzante USB",
+    description: "Pescado de felpa que salta y se mueve al tacto. Sensor de movimiento recargable con USB y bolsita interna para colocar catnip.",
+    price: 39,
+    category: "Juguetes",
+    color: "Azul",
+    features: ["Sensor de Movimiento", "USB Recargable", "Catnip Incluido"],
+    image: "/cat_house.png",
+    stock: 20,
+    isNew: true
+  },
+
+  // --- Category: Combos (4 products) ---
+  {
+    id: 19,
+    name: "Combo Bienvenida CatLover",
+    description: "El kit de inicio perfecto. Incluye rascador básico, juguete caña con pluma, comedero doble de acero inoxidable y un snack premium.",
+    price: 149,
+    category: "Combos",
+    color: "Celeste",
+    features: ["Kit Inicial", "Ahorro 20%", "Para Cachorros"],
+    image: "/cat_house.png",
+    stock: 10,
+    isNew: true
+  },
+  {
+    id: 20,
+    name: "Caja Sorpresa CatBox Mensual",
+    description: "Nuestra caja mensual por suscripción. Contiene 2 juguetes exclusivos, 3 variedades de snacks gourmet y un accesorio sorpresa.",
+    price: 99,
+    category: "Combos",
+    color: "Marrón",
+    features: ["Sorpresa Mensual", "Snacks Importados", "Juguetes Nuevos"],
+    image: "/cat_house.png",
+    stock: 15,
+    isNew: true
+  },
+  {
+    id: 21,
+    name: "Combo Arenero & Higiene",
+    description: "Arenero cerrado anti-olores con filtro de carbón activo, pala cernidora, tapete recolector de arena y bolsa de arena biodegradable de 5kg.",
+    price: 180,
+    category: "Combos",
+    color: "Gris",
+    features: ["Anti-Olores", "Pala Incluida", "Arena Biodegradable"],
+    image: "/cat_house.png",
+    stock: 8,
+    isNew: false
+  },
+  {
+    id: 22,
+    name: "Combo Nutrición Gourmet",
+    description: "Pack alimenticio con 12 latas de comida húmeda de salmón y pollo, paquete de snacks secos de atún y un comedero doble de cerámica.",
+    price: 110,
+    category: "Combos",
     color: "Blanco",
-    features: ["Open-Ear", "Resistente al Agua", "Batería 24h"],
-    image: "/cys_sport_run.png",
-    stock: 9,
+    features: ["Comida Húmeda", "Cerámica Doble", "Ingredientes Naturales"],
+    image: "/cat_house.png",
+    stock: 11,
+    isNew: false
+  },
+
+  // --- Category: Apoyo Calle (2 products) ---
+  {
+    id: 23,
+    name: "Caja Solidaria: Alimentación",
+    description: "Donación de 3 kg de comida premium para gatos directamente a albergues de rescate asociados. Recibirás un certificado y reporte de entrega.",
+    price: 30,
+    category: "Apoyo Calle",
+    color: "Verde",
+    features: ["Donación Directa", "3kg Alimento", "Reporte de Entrega"],
+    image: "/cys_cat_winking.png",
+    stock: 100,
     isNew: true
   },
   {
     id: 24,
-    name: "CyS Lite Run Open",
-    description: "La alternativa abierta más económica. Cómodos, ligeros, con botones de control integrados y gran claridad en llamadas.",
-    price: 189,
-    category: "Open-Ear",
-    color: "Verde",
-    features: ["Open-Ear", "Batería 10h", "Control Táctil"],
-    image: "/cys_sport_run.png",
-    stock: 20,
-    isNew: false
+    name: "Caja Solidaria: Salud y Vacuna",
+    description: "Financia el tratamiento de desparasitación y la primera dosis de vacuna triple felina de un gatito rescatado en el albergue. Recibe su foto.",
+    price: 60,
+    category: "Apoyo Calle",
+    color: "Blanco",
+    features: ["Tratamiento Médico", "Vacuna Triple", "Apadrinamiento Foto"],
+    image: "/cys_cat_winking.png",
+    stock: 100,
+    isNew: true
   }
 ];
 
 const defaultShippingMethods = [
   {
     id: 1,
-    name: "Recojo en Tienda (CyS Surco)",
-    description: "Recoge tu pedido gratis en nuestro local de Santiago de Surco. Listo en 4 horas.",
+    name: "Recojo en Oficina CyS Animals",
+    description: "Recoge gratis tus artículos en nuestro local de mascotas en Santiago de Surco. Listo en 3 horas.",
     price: 0,
     type: "recojo"
   },
   {
     id: 2,
-    name: "Envío Regular (Lima Metropolitana)",
-    description: "Entrega a domicilio en un plazo de 24 a 48 horas.",
+    name: "Envío Regular Delivery (Lima Metropolitana)",
+    description: "Entrega a domicilio para tus productos en un plazo de 24 a 48 horas.",
     price: 15,
     type: "delivery"
   },
   {
     id: 3,
-    name: "Envío Express Premium",
-    description: "Entrega prioritaria el mismo día para compras realizadas antes de la 1:00 PM.",
-    price: 30,
+    name: "Envío Express a Provincias (Olva Courier / Shalom)",
+    description: "Envío seguro de tus artículos a nivel nacional mediante agencia en un plazo de 3 a 5 días hábiles.",
+    price: 25,
     type: "delivery"
   }
 ];
@@ -328,26 +330,54 @@ const defaultSettings = {
   whatsappNumber: "924278597",
   yapeQr: "/yape_qr.png",
   yapeOwner: "Christian Wilber Atamari Hancco",
-  bannerImage: "/cys_banner.png",
-  storeName: "CyS solutions",
-  tagline: "Descubre el Sonido del Futuro"
+  bannerImage: "/cys_cat_winking.png",
+  storeName: "CyS solutions Animals",
+  tagline: "El Paraíso de tu Compañero Felino"
 };
 
 export const AppProvider = ({ children }) => {
   // Load initial data from localStorage or fallback to defaults
+  // Plus auto-cleaning logic for cache migrations
   const [products, setProducts] = useState(() => {
     const saved = localStorage.getItem('cys_products');
-    return saved ? JSON.parse(saved) : defaultProducts;
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      const hasOldCategory = parsed.some(p => p.category === 'Over-Ear' || p.name.toLowerCase().includes('neon') || p.name.toLowerCase().includes('buds'));
+      if (hasOldCategory) {
+        localStorage.setItem('cys_products', JSON.stringify(defaultProducts));
+        return defaultProducts;
+      }
+      return parsed;
+    }
+    return defaultProducts;
   });
 
   const [shippingMethods, setShippingMethods] = useState(() => {
     const saved = localStorage.getItem('cys_shipping_methods');
-    return saved ? JSON.parse(saved) : defaultShippingMethods;
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      const hasOldShipping = parsed.some(m => m.name.includes('Surco') || m.name.includes('Regular'));
+      if (hasOldShipping) {
+        localStorage.setItem('cys_shipping_methods', JSON.stringify(defaultShippingMethods));
+        return defaultShippingMethods;
+      }
+      return parsed;
+    }
+    return defaultShippingMethods;
   });
 
   const [settings, setSettings] = useState(() => {
     const saved = localStorage.getItem('cys_settings');
-    return saved ? JSON.parse(saved) : defaultSettings;
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      const hasOldSettings = parsed.storeName === 'CyS solutions' || parsed.tagline.includes('Sonido');
+      if (hasOldSettings) {
+        localStorage.setItem('cys_settings', JSON.stringify(defaultSettings));
+        return defaultSettings;
+      }
+      return parsed;
+    }
+    return defaultSettings;
   });
 
   const [orders, setOrders] = useState(() => {
