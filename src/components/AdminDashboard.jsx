@@ -117,7 +117,7 @@ export default function AdminDashboard() {
       {/* Admin Content Area */}
       <div className="admin-content">
         <div className="admin-content-header">
-          <h2>Panel de Control - CyS solutions</h2>
+          <h2>Panel de Control - CyS solutions Animals</h2>
           <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600 }}>
             Fecha Actual: {new Date().toLocaleDateString('es-PE')}
           </span>
@@ -295,10 +295,10 @@ export default function AdminDashboard() {
                   name: '',
                   price: '',
                   description: '',
-                  category: 'Over-Ear',
-                  color: 'Negro',
+                  category: 'Casas',
+                  color: 'Gris',
                   featuresText: '',
-                  image: '/cys_neon_wireless.png',
+                  image: '/cat_house.png',
                   stock: '10'
                 })}
                 style={{ padding: '8px 16px', fontSize: '0.85rem' }}
@@ -364,10 +364,11 @@ export default function AdminDashboard() {
                             value={productForm.category}
                             onChange={(e) => setProductForm({ ...productForm, category: e.target.value })}
                           >
-                            <option value="Over-Ear">Over-Ear</option>
-                            <option value="In-Ear">In-Ear</option>
-                            <option value="Gaming">Gaming</option>
-                            <option value="Open-Ear">Open-Ear</option>
+                            <option value="Casas">Casas</option>
+                            <option value="Accesorios">Accesorios</option>
+                            <option value="Juguetes">Juguetes</option>
+                            <option value="Combos">Combos</option>
+                            <option value="Apoyo Calle">Apoyo Calle</option>
                           </select>
                         </div>
                         <div className="form-group">
@@ -377,12 +378,18 @@ export default function AdminDashboard() {
                             value={productForm.color}
                             onChange={(e) => setProductForm({ ...productForm, color: e.target.value })}
                           >
+                            <option value="Gris">Gris</option>
+                            <option value="Beige">Beige</option>
+                            <option value="Crema">Crema</option>
+                            <option value="Marrón">Marrón</option>
+                            <option value="Celeste">Celeste</option>
+                            <option value="Rojo">Rojo</option>
+                            <option value="Amarillo">Amarillo</option>
+                            <option value="Naranja">Naranja</option>
                             <option value="Negro">Negro</option>
                             <option value="Blanco">Blanco</option>
-                            <option value="Plateado">Plateado</option>
+                            <option value="Multicolor">Multicolor</option>
                             <option value="Verde">Verde</option>
-                            <option value="Rojo">Rojo</option>
-                            <option value="Azul">Azul</option>
                           </select>
                         </div>
                       </div>
@@ -394,10 +401,8 @@ export default function AdminDashboard() {
                           value={productForm.image}
                           onChange={(e) => setProductForm({ ...productForm, image: e.target.value })}
                         >
-                          <option value="/cys_neon_wireless.png">Over-Ear Neon (Pre-generado)</option>
-                          <option value="/cys_sonic_buds.png">Sonic Buds (Pre-generado)</option>
-                          <option value="/cys_gamer_pro.png">Gamer Pro RGB (Pre-generado)</option>
-                          <option value="/cys_sport_run.png">Sport Run (Pre-generado)</option>
+                           <option value="/cat_house.png">Casa/Rascador (cat_house.png)</option>
+                           <option value="/cys_cat_winking.png">Gato Guiñando (cys_cat_winking.png)</option>
                         </select>
                         <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '4px' }}>
                           O escribe una URL personalizada:
@@ -405,7 +410,7 @@ export default function AdminDashboard() {
                         <input
                           type="text"
                           className="form-input"
-                          placeholder="https://ejemplo.com/audifono.png"
+                          placeholder="https://ejemplo.com/producto.png"
                           value={productForm.image}
                           onChange={(e) => setProductForm({ ...productForm, image: e.target.value })}
                         />
@@ -416,7 +421,7 @@ export default function AdminDashboard() {
                         <input
                           type="text"
                           className="form-input"
-                          placeholder="Ej. Cancelación de Ruido, True Wireless, Batería 50h+"
+                          placeholder="Ej. Multinivel, Postes Sisal, Cueva Acolchada"
                           value={productForm.featuresText}
                           onChange={(e) => setProductForm({ ...productForm, featuresText: e.target.value })}
                         />
