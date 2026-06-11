@@ -1774,7 +1774,7 @@ body.dark-mode .stats-card {
   border: 1px solid var(--light-border);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
-  overflow: hidden;
+  overflow-x: auto;
   margin-bottom: 24px;
 }
 
